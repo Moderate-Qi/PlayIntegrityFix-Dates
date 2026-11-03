@@ -22,10 +22,43 @@ if command -v curl > /dev/null 2>&1; then
     download() { curl --connect-timeout 10 -Ls "$1" > "$2"; }
 fi
 
+# Keep the selected date policy when installing an upstream Autopif update.
+patch_autopif_mode() {
+    local INPUT_FILE="$1"
+    local PATCHED_FILE="$TEMPDIR/temp_autopif_modes.sh"
+
+    if grep -q '^# PIF_LOCAL_PATCH_MODE$' "$INPUT_FILE"; then
+        return 0
+    fi
+
+    busybox awk '
+        BEGIN { anchors = 0 }
+        $0 == "# Preserve previous setting" {
+            anchors++
+            print "# PIF_LOCAL_PATCH_MODE"
+            print "SECURITY_PATCH=\"$(sh \"$MODDIR/patch_mode.sh\" resolve \"$SECURITY_PATCH\")\" || {"
+            print "    echo \"! Failed to apply the selected security patch mode\""
+            print "    exit 1"
+            print "}"
+            print ""
+        }
+        { print }
+        END { if (anchors != 1) exit 1 }
+    ' "$INPUT_FILE" > "$PATCHED_FILE" || return 1
+
+    sh -n "$PATCHED_FILE" || return 1
+    cat "$PATCHED_FILE" > "$INPUT_FILE" || return 1
+}
+
 # fetch script
 fetch_autopif() {
     if download "$1" "$TEMPDIR/temp_autopif.sh"; then
         if ! grep -q "^#!/bin/sh" $TEMPDIR/temp_autopif.sh; then
+            return 1
+        fi
+
+        if ! patch_autopif_mode "$TEMPDIR/temp_autopif.sh"; then
+            echo "[!] Could not apply the date mode hook; keeping the current autopif.sh"
             return 1
         fi
 
@@ -34,8 +67,8 @@ fetch_autopif() {
         newhash="$(cat $TEMPDIR/temp_autopif.sh | busybox crc32)"
 
         if [ ! "$newhash" = "$curhash" ]; then
-            cat "$TEMPDIR/temp_autopif.sh" > "$MODDIR/autopif.sh"
-            echo "[+] autopif has been updated"
+            cat "$TEMPDIR/temp_autopif.sh" > "$MODDIR/autopif.sh" || return 1
+            echo "[+] autopif has been updated with selectable date modes"
         fi
 
         return 0

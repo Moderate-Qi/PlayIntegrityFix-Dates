@@ -8,6 +8,7 @@ export default defineConfig({
   base: './',
   build: {
     outDir: '../module/webroot',
+    emptyOutDir: false,
     chunkSizeWarningLimit: 1000,
   },
   plugins: [

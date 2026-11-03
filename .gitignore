@@ -14,3 +14,16 @@ local.properties
 .vscode
 checksum.h
 module/webroot
+
+# Local build and signing inputs
+local.properties
+key.properties
+*.jks
+*.keystore
+__pycache__/
+release-input/
+publication-output/
+
+publication/manager-migration/classes/
+publication/manager-migration/dex/
+uid-native/tests/trace_reason_probe

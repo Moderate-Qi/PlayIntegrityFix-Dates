@@ -39,3 +39,8 @@ resetprop_if_diff vendor.boot.vbmeta.device_state locked
 
 # Other
 resetprop_if_diff sys.oem_unlock_allowed 0
+
+# Reapply persisted date routing once after boot; no background watcher.
+if [ -e /data/adb/tricky_store/pif_auto_security_patch ]; then
+    sh "$MODPATH/security_patch.sh" || log -t PIF-Dates 'Date configuration restore failed; inspect WebUI dates'
+fi

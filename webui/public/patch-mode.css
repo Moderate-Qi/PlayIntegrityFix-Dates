@@ -1,0 +1,144 @@
+pif-patch-mode {
+  display: block;
+  margin: 0 0 12px;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.patch-mode-card {
+  padding: 14px 16px;
+  border: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+  border-radius: 16px;
+  background: var(--md-sys-color-surface-container-high, #ece6f0);
+}
+
+.patch-mode-heading, .patch-mode-actions, .patch-mode-date-fields {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patch-mode-heading {
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.patch-mode-heading strong { font-size: 15px; }
+.patch-mode-current { color: var(--md-sys-color-primary, #6750a4); font-weight: 650; }
+.patch-mode-card label { display: block; }
+
+.patch-mode-card select, .patch-mode-date-fields input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--md-sys-color-outline, #79747e);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--md-sys-color-on-surface, #1d1b20);
+  background: var(--md-sys-color-surface-container-low, #f7f2fa);
+  font: inherit;
+}
+
+.patch-mode-card select:focus-visible, .patch-mode-date-fields input:focus-visible,
+.patch-mode-button:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary, #6750a4);
+  outline-offset: 2px;
+}
+
+.patch-mode-info, .patch-mode-feedback {
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--md-sys-color-on-surface-variant, #49454f);
+  font-size: 12px;
+}
+
+.patch-mode-feedback:empty { display: none; }
+.patch-mode-feedback.error { color: var(--md-sys-color-error, #b3261e); }
+.patch-mode-actions { justify-content: flex-end; margin-top: 10px; flex-wrap: wrap; }
+
+.patch-mode-button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 14px;
+  background: var(--md-sys-color-secondary-container, #e8def8);
+  color: var(--md-sys-color-on-secondary-container, #1d192b);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.patch-mode-button.primary {
+  color: var(--md-sys-color-on-primary, #fff);
+  background: var(--md-sys-color-primary, #6750a4);
+}
+
+.patch-mode-button[hidden] { display: none; }
+.patch-mode-button:disabled, .patch-mode-card select:disabled { opacity: .55; cursor: default; }
+
+.patch-mode-dialog {
+  box-sizing: border-box;
+  width: min(420px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 0;
+  border-radius: 24px;
+  padding: 24px;
+  color: var(--md-sys-color-on-surface, #1d1b20);
+  background: var(--md-sys-color-surface-container-high, #ece6f0);
+  font: 14px/1.5 system-ui, sans-serif;
+}
+
+.patch-mode-dialog::backdrop { background: rgb(0 0 0 / 45%); }
+.patch-mode-dialog h2 { margin: 0 0 8px; font-size: 20px; }
+.patch-mode-dialog p { margin: 8px 0 16px; }
+.patch-mode-date-fields { align-items: stretch; }
+.patch-mode-date-fields label { flex: 1; min-width: 0; }
+.patch-mode-date-fields label:first-child { flex: 1.35; }
+.patch-mode-date-fields span { display: block; margin-bottom: 6px; }
+.patch-mode-date-fields input { padding-inline: 9px; }
+.patch-mode-dialog .patch-mode-actions { margin-top: 20px; }
+.patch-mode-dialog .patch-mode-feedback { min-height: 18px; margin-top: 12px; margin-bottom: 0; }
+
+@media (max-width: 360px) {
+  .patch-mode-card { padding: 12px; }
+  .patch-mode-heading { flex-wrap: wrap; gap: 2px; }
+  .patch-mode-dialog { padding: 20px; }
+}
+
+/* dates1.1: keep configuration compact and reserve room for terminal output. */
+pif-patch-mode { margin-bottom: 8px; font-size: 13px; }
+.patch-mode-card { padding: 8px 10px; border-radius: 12px; }
+.patch-mode-heading { gap: 6px; margin-bottom: 6px; flex-wrap: nowrap; }
+.patch-mode-heading strong { font-size: 13px; white-space: nowrap; }
+.patch-mode-heading .patch-mode-actions { margin: 0; gap: 4px; flex-wrap: nowrap; }
+.patch-mode-heading .patch-mode-button { min-height: 30px; padding: 4px 8px; font-size: 12px; white-space: nowrap; }
+.patch-mode-card select { min-height: 36px; padding: 6px 10px; border-radius: 8px; font-size: 13px; }
+.patch-mode-details { margin-top: 4px; }
+.patch-mode-details summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 28px; cursor: pointer; list-style: none;
+}
+.patch-mode-details summary::-webkit-details-marker { display: none; }
+.patch-mode-details .patch-mode-current { font-size: 12px; min-width: 0; }
+.patch-mode-detail-label { flex-shrink: 0; font-size: 12px; color: var(--md-sys-color-primary, #6750a4); }
+.patch-mode-detail-label::after { content: " ▾"; }
+.patch-mode-details[open] .patch-mode-detail-label::after { content: " ▴"; }
+.patch-mode-details[open] .patch-mode-info { margin-top: 5px; }
+.patch-mode-details summary:focus-visible { outline: 2px solid var(--md-sys-color-primary, #6750a4); outline-offset: 1px; border-radius: 4px; }
+.patch-mode-card > .patch-mode-feedback { margin-top: 4px; font-size: 12px; }
+
+/* The two panels scroll independently. Portrait always keeps the log visible. */
+#root > section { overflow: hidden; }
+#root main > div:has(> pif-patch-mode) {
+  min-height: 0; max-height: 52%; flex: 0 1 auto;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+}
+#root main > div:has(#clear-terminal) {
+  flex: 1 1 0; min-height: min(30svh, 200px);
+}
+@media (orientation: landscape) {
+  #root main > div:has(> pif-patch-mode) { flex: 1 1 0; max-height: 100%; }
+  #root main > div:has(#clear-terminal) { min-height: 0; }
+}

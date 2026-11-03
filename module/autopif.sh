@@ -129,6 +129,12 @@ case $DEVICE in
 	*) DEVICE_INITIAL_SDK_INT=37;;
 esac
 
+# PIF_LOCAL_PATCH_MODE
+SECURITY_PATCH="$(sh "$MODDIR/patch_mode.sh" resolve "$SECURITY_PATCH")" || {
+    echo "! Failed to apply the selected security patch mode"
+    exit 1
+}
+
 # Preserve previous setting
 pifProp="$MODDIR/pif.prop"
 [ -f "/data/adb/pif.prop" ] && pifProp="/data/adb/pif.prop"

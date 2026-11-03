@@ -1,2 +1,10 @@
 * text=auto
 *.jpg binary
+
+# Preserve the approved publication documents verbatim.
+/BUILDING.md -text
+/CHANGELOG.md -text
+/CHANGELOG_LOCAL.md -text
+/NOTICE.md -text
+/README.md -text
+/RELEASE_NOTES.md -text

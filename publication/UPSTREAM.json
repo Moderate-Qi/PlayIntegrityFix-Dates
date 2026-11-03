@@ -1,0 +1,9 @@
+{
+  "project": "PlayIntegrityFix",
+  "url": "https://github.com/KOWX712/PlayIntegrityFix",
+  "base_commit": "1138c6f3cebb70c00ec5573911cee745134a3e6d",
+  "local_version": "v4.9-inject-s-dates1.2",
+  "release_asset": "PlayIntegrityFix-v4.9-inject-s-dates1.2.zip",
+  "maintainer": "Moderate-Qi",
+  "prepared": "2026-11-03"
+}

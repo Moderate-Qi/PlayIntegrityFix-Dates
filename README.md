@@ -1,54 +1,61 @@
-# Play Integrity Fix
+# Play Integrity Fix · 日期管理增强版
 
-This module tries to fix Play Integrity verdicts to get a valid attestation.
+基于 PIF v4.9 inject-s，加入补丁日期模式、TS-OSS 日期联动和紧凑版 WebUI。指纹更新、日期设置、同步状态和运行输出集中在一个界面里，日常调整更方便。
 
-## NOTE
+基于版本：**v4.9-inject-s**。增强维护：[Moderate-Qi](https://github.com/Moderate-Qi)。
 
-This module is not made to hide root, nor to avoid detections in other apps. It only serves to pass Device verdict in the Play Integrity tests and certify your device.
+## 相比原版增加
 
-## Tutorial
+- **Google 原值／系统原值。** Google Play 服务和 Play 商店沿用 Pixel 配置中的补丁日期，系统及普通应用沿用当前固件的原始补丁日期，两套日期分别管理。
+- **四种日期模式。** 支持 Google 原值／系统原值、官方原始日期、day01、自定义日期，直接在 WebUI 中选择。
+- **Autopif 自动联动。** 获取新指纹时继续使用已选日期模式，指纹和日期一次更新。
+- **配合 TS-OSS 管理证明日期。** 系统、Vendor 与 Boot 补丁日期按各自配置同步，Google 应用沿用独立设置。
+- **配置备份与开机同步。** 保存调整前的日期配置，开机后继续应用已保存模式。
 
-You will need root and Zygisk. Enable Magisk's built-in Zygisk or use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) / [NeoZygisk](https://github.com/JingMatrix/NeoZygisk) / [ReZygisk](https://github.com/PerformanC/ReZygisk).
+## 使用方式
 
-## Options
+1. 从本仓库 Releases 下载 `PlayIntegrityFix-v4.9-inject-s-dates1.2.zip`，在 SukiSU Ultra 中刷入并重启。
+2. 进入 PIF WebUI，选择“Google 原值／系统原值”，启用“同步安全补丁”。
+3. 选择 Pixel 6–9 对应机型，运行 Autopif，查看下方指纹和同步输出。
+4. 配合 TS-OSS、现有 keybox 与目标应用配置使用，完成同步后重启手机。
 
-- **spoofBuild**: spoof fingerprint field, enabled by default.
-- **spoofProvider**: custom keystore provider, enable when not using [TrickyStore](https://github.com/5ec1cff/TrickyStore) or [TEESimulator](https://github.com/JingMatrix/TEESimulator).
-- **spoofProps**: spoof prop when gms read from system prop, enabled by default.
-- **spoofSignature**: spoof rom signature, enable when your rom is signed by testkey. You can check your rom signature by running this command in terminal.
-  ```sh
-  unzip -l /system/etc/security/otacerts.zip | grep -oE "testkey|releasekey"
-  ```
-- **spoofVendingSdk**: spoof sdk version to 32 to Play Store if your device runs Android 13 or higher, this option will not take effect if your device is running Android 12 or lower.
-  - Known issue: 
-    - Back gesture/nav button from within the Play Store exits directly to homescreen for all
-    - Blank account sign-in status and broken app updates for ROMs A14+
-    - Incorrect app variants may be served for all
-    - Full Play Store crashes for some setups
-  - pixel_beta fingerprint can no longer get device verdict even on legacy check, so enabling this option won't help you to get device verdict anymore.
+## 实测环境
 
-## Variety
+小米 14 Ultra，HyperOS 3.0.5.0，Android 16，SukiSU Ultra v4.3.0 / 41131-6（LKM），Zygisk Next 1.5.2（864），LSPosed 2.2.1（7912）。系统原始安全补丁日期为 2025-11-01。
 
-- **inject-vending**: Based on the official inject branch, with the added spoofVendingSdk option.
-- **inject-manual**: Based on inject-vending, with auto config (detect TrickyStore and ROM signature) removed.
-- **inject-s**: Based on inject-manual, lightweight since it dropped the JSON format (pif.json -> pif.prop).
+## 界面与实测截图
 
-> [!NOTE]
-> **inject-vending** and **inject-manual** branches are discontinued, but the branches will not be removed.
+### PIF dates1.2：日期模式与运行输出
 
-> [!WARNING]
-> Do not use third-party tools to fetch fingerprints to avoid conflicts.
-> The WebUI provides full control for configurable options.
+<a href="docs/screenshots/pif-dates12.jpg"><img src="docs/screenshots/pif-dates12.jpg" alt="PIF dates1.2：日期模式与运行输出" width="360"></a>
 
-### About official PIF by chiteroman
+### Trust Attestor 1.5：四层通过，44 项通过
 
-- The [official PIF by chiteroman](https://github.com/chiteroman/PlayIntegrityFix) has been removed from GitHub.
-  - Official untouched main branch: https://github.com/KOWX712/PlayIntegrityFix/tree/main
-  - Official untouched inject branch: https://github.com/KOWX712/PlayIntegrityFix/tree/inject
-  - All tags from the official PIF repo are also preserved in this repo.
+<a href="docs/screenshots/trustattestor-15.jpg"><img src="docs/screenshots/trustattestor-15.jpg" alt="Trust Attestor 1.5：四层通过，44 项通过" width="360"></a>
 
-## Acknowledgments
+### 春秋 4.6.2：Normal
 
-- [kdrag0n](https://github.com/kdrag0n/safetynet-fix) & [Displax](https://github.com/Displax/safetynet-fix) for the original idea.
-- This project is forked from the official chiteroman's PIF repo.
-- [osm0sis](https://github.com/osm0sis) for his original [autopif2.sh](https://github.com/osm0sis/PlayIntegrityFork/blob/main/module/autopif2.sh) script, and [backslashxx](https://github.com/backslashxx) & [KOWX712](https://github.com/KOWX712) for improving it ([action.sh](https://github.com/chiteroman/PlayIntegrityFix/blob/main/module/action.sh)).
+<a href="docs/screenshots/chunqiu-462.jpg"><img src="docs/screenshots/chunqiu-462.jpg" alt="春秋 4.6.2：Normal" width="360"></a>
+
+### Securify：环境结果与系统原始日期
+
+<a href="docs/screenshots/securify.jpg"><img src="docs/screenshots/securify.jpg" alt="Securify：环境结果与系统原始日期" width="360"></a>
+
+## 来源、版权与许可证
+
+上游项目：[PIF v4.9 inject-s；chiteroman、KOWX712 及原项目贡献者](https://github.com/KOWX712/PlayIntegrityFix)。功能增强、集成和文档由 Moderate-Qi 维护，保留原作者署名与第三方版权记录。
+
+[GPL-3.0](LICENSE)。具体修改、来源和构建入口见 [CHANGELOG_LOCAL.md](CHANGELOG_LOCAL.md)、[NOTICE.md](NOTICE.md) 和 [BUILDING.md](BUILDING.md)。
+
+## 配套项目
+
+- [TS-OSS 199 兼容增强版](https://github.com/Moderate-Qi/TrickyStoreOSS)
+- [HMA-OSS UID 一体化增强版](https://github.com/Moderate-Qi/HMA-OSS-UID)
+- [DuckUSB Service 服务增强版](https://github.com/Moderate-Qi/DuckUSB-Service)
+- [TrickyAddon 目标管理增强版](https://github.com/Moderate-Qi/TrickyAddon)
+
+## 免责声明
+
+如有侵权请联系我删除。
+
+仅代表本人使用的当前系统和当前环境下的实测结果，且通过相关检测器不代表所有软件都检测不到环境异常，请勿用于游戏作弊等场景。

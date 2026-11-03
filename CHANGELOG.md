@@ -1,3 +1,7 @@
+# 上游更新记录
+
+增强版更新见 [CHANGELOG_LOCAL.md](CHANGELOG_LOCAL.md)。
+
 # Changelog
 
 Play Integrity Fix [INJECT] - fork by KOWX712

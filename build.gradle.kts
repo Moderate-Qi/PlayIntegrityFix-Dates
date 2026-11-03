@@ -16,7 +16,7 @@ tasks.register("copyZygiskFiles") {
 
     doLast {
         classesJar.copyTo(moduleFolder.resolve("classes.dex"), overwrite = true)
-        moduleFolder.resolve("inject").deleteRecursively()
+        // Keep earlier generated files; packaging selects the current module tree.
         zygiskSoDir.walk()
             .filter { it.isFile && it.name == "libzygisk.so" }
             .forEach { soFile ->

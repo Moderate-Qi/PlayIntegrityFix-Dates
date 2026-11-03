@@ -1,7 +1,7 @@
 id=playintegrityfix
 name=Play Integrity Fix [INJECT]
-version=v4.9-inject-s
-versionCode=490
-author=chiteroman, KOWX712
-description=Universal modular fix for Play Integrity on devices running Android 8-17
+version=v4.9-inject-s-dates1.2
+versionCode=492
+author=chiteroman, KOWX712; local date integration
+description=Universal modular fix for Play Integrity on devices running Android 8-17; local date modes, firmware date routing and compact WebUI
 updateJson=https://fastly.jsdelivr.net/gh/KOWX712/playintegrityfix@inject_s/update.json

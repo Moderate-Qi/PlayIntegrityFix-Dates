@@ -1,38 +1,30 @@
-# Localization Guideline
+# WebUI Translation Guide
 
-## Add a new langauge
+## Add a language
 
-1. [Fork](https://github.com/KOWX712/PlayIntegrityFix/fork) this repository.
-2. Copy `webui/public/locales/template.xml` to strings folder.
-3. Rename `template.xml` to `{language-code}.xml` by refering [language codes standard](https://support.crowdin.com/developer/language-codes).
-4. Add language entrance in `webui/public/locales/languages.json`, format: "language-code": "Language name in your language".
-    ```json
-    {
-        "en": "English",
-        "fr": "Français", // Your language, keep alphabetical order
-        "zh-CN": "简体中文"
-    }
-   ```
-5. Do translation to all the string value or update existing string value.
-6. Add your info to `webui/public/locales/CONTRIBUTOR.md`.
-7. Open pull request.
+1. Fork [Moderate-Qi/PlayIntegrityFix](https://github.com/Moderate-Qi/PlayIntegrityFix).
+2. Copy `webui/public/locales/template.xml` into `webui/public/locales/strings/` and name it `{language-code}.xml` using the [Crowdin language codes](https://support.crowdin.com/developer/language-codes).
+3. Translate the string values.
+4. Add the language to `webui/public/locales/languages.json` in alphabetical order:
 
-## Update existing langauge
+```json
+{
+  "en": "English",
+  "fr": "Français",
+  "zh-CN": "简体中文"
+}
+```
 
-- Same with adding a new language, skip step 2 to 4.
+5. Add your name to [CONTRIBUTOR.md](CONTRIBUTOR.md) and open a pull request.
 
----
+## Update a language
 
-## QnA
+Edit the existing XML strings, update the contributor list, and open a pull request.
 
-- **How to switch language?**
+## Language selection
 
-- Not supported in user end, it will follow system locales for now.
-- You can set it manully with browser console: 
-  ```javascript
-  loadTranslations('zh-CN');
-  ```
+The WebUI follows the system locale. To choose a language in the browser console:
 
-## Future plan
-
-- Crowdin integration if many language added.
+```javascript
+loadTranslations('zh-CN');
+```
